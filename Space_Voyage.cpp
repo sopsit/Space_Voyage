@@ -42,22 +42,22 @@ void orbit(string side) // defects: calculatin  of energy and writing in logg
     if (side == "up")
     {
         Fallcon.coordinate.first -= 3;
-        Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 3));
+        Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 3));
     }
     else if (side == "down")
     {
         Fallcon.coordinate.first += 3;
-        Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 3));
+        Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 3));
     }
     else if (side == "right")
     {
         Fallcon.coordinate.second += 3;
-        Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 3));
+        Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 3));
     }
     else if (side == "left")
     {
         Fallcon.coordinate.second -= 3;
-        Fallcon.listOfMove.push_back(logg("LEFT", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 3));
+        Fallcon.listOfMove.push_back(logg("LEFT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 4, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 3));
     }
 }
 
@@ -286,7 +286,7 @@ void go_down()
         else
         {
             Fallcon.coordinate.first = Fallcon.coordinate.first + 1;
-            Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 5));
+            Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
         }
     }
     for (int i = Fallcon.listOfMove.size() - 1; i >= 0; i--)
@@ -332,11 +332,12 @@ void go_up()
         else
         {
             Fallcon.coordinate.first = Fallcon.coordinate.first - 1;
-            Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 5));
+            Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
         }
     }
 }
-void go_right(){
+void go_right()
+{
 
     while (Fallcon.coordinate.second < m && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)
     {
@@ -358,11 +359,12 @@ void go_right(){
         else
         {
             Fallcon.coordinate.second += 1;
-            Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 5));
+            Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
         }
     }
 }
-void go_left(){
+void go_left()
+{
 
     while (Fallcon.coordinate.second > 0 && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2)
     {
@@ -384,8 +386,31 @@ void go_left(){
         else
         {
             Fallcon.coordinate.second -= 1;
-            Fallcon.listOfMove.push_back(logg("LEFT", Fallcon.listOfMove[Fallcon.listOfMove.size()-1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size()-1].time + 5));
+            Fallcon.listOfMove.push_back(logg("LEFT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
         }
+    }
+}
+void go_one_unit(char s)
+{
+    if (s == 'u' && Fallcon.coordinate.first > 0)
+    {
+        Fallcon.coordinate.first = Fallcon.coordinate.first - 1;
+        Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+    }
+    if (s == 'd' && Fallcon.coordinate.first < n)
+    {
+        Fallcon.coordinate.first = Fallcon.coordinate.first + 1;
+        Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+    }
+    if (s == 'r' && Fallcon.coordinate.second < m)
+    {
+        Fallcon.coordinate.second = Fallcon.coordinate.second + 1;
+        Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+    }
+    if (s == 'l' && Fallcon.coordinate.second > 0)
+    {
+        Fallcon.coordinate.second = Fallcon.coordinate.second - 1;
+        Fallcon.listOfMove.push_back(logg("LEFT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
     }
 }
 int main()
