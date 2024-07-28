@@ -8,9 +8,10 @@ vector<vector<int>> mapp;
 vector<pair<int, int>> for4(2); // save 4's
 struct logg
 {
-    
+    logg(){}
+    logg (string SIDE , lli en=0 , lli Timee=0 ) : side(SIDE) , energy(en) , time(Timee) {}
     string side;
-    lli energy;
+    lli energy=0;
     lli time=0;
 };
 struct SpaceCraft
@@ -41,18 +42,22 @@ void orbit(string side)// defects: calculatin  of energy and writing in logg
     if (side == "up")
     {
         Fallcon.coordinate.first -= 3;
+        Fallcon.listOfMove.push_back(logg("UP"));
     }
     else if (side == "down")
     {
         Fallcon.coordinate.first += 3;
+          Fallcon.listOfMove.push_back(logg("DOWN"));
     }
     else if (side == "right")
     {
         Fallcon.coordinate.second += 3;
+        Fallcon.listOfMove.push_back(logg("RIGHT"));
     }
     else if (side == "left")
     {
         Fallcon.coordinate.second -= 3;
+        Fallcon.listOfMove.push_back(logg("LEFT"));
     }
 }
 
@@ -210,6 +215,81 @@ bool found_2()
     }
     return flag;
 }
+
+void print()
+{
+    for(lli i=0 ; i<Fallcon.listOfMove.size() ; i++)
+    {
+        cout<<Fallcon.listOfMove[i].side<<" "<<
+        Fallcon.listOfMove[i].energy<<" "<<
+        Fallcon.listOfMove[i].time<<"\n";
+    }
+     cout<<Fallcon.coordinate.first<<" "<<Fallcon.coordinate.second<<"\n";
+}
+void go_down()
+{
+    
+    while(Fallcon.coordinate.first + 1 < n && 
+    mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second]!=2)
+    {
+       if(mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second]==3)
+       {
+         orbit("down");
+       }
+       else
+       {
+         Fallcon.coordinate.first=Fallcon.coordinate.first + 1;
+         Fallcon.listOfMove.push_back(logg("DOWN"));
+       }
+       if(found_2())
+       {
+         found_1(); print() ; exit(0);
+       }
+       else if(found_1())
+       {
+          print() ; exit(0);
+       }
+    }
+    for(int i=Fallcon.listOfMove.size()-1 ; i>=0 ; i--)
+    {
+        if(Fallcon.listOfMove[i].side=="DOWN")
+        {
+         if(mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second]==3)
+          { orbit("up"); }
+        else
+        {
+          Fallcon.coordinate.first=Fallcon.coordinate.first - 1;
+        }
+       }
+        else
+        {break;}
+    }
+}
+
+void go_up()
+{
+  while(Fallcon.coordinate.first - 1 >= 0 && 
+  mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second]!=2)
+  {
+    if(mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second]==3)
+    {
+      orbit("up");
+    }
+    else
+    {
+      Fallcon.coordinate.first=Fallcon.coordinate.first - 1;
+      Fallcon.listOfMove.push_back(logg("UP"));
+    }
+    if(found_2())
+    {
+    found_1() ; print() ; exit(0);
+    }
+    else if(found_1())
+     {
+      print() ; exit(0);
+     }
+    }
+}
 int main()
 {
 
@@ -238,7 +318,7 @@ int main()
     
    cout<<"\n";
    //ride();
-   cout<<found_2()<<"\n";
+  // cout<<found_2()<<"\n";
    /* for(int i=0 ; i< n  ; i++)
     {
         for (int j=0 ; j< m ; j++)
@@ -247,13 +327,13 @@ int main()
         }
         cout<<endl;
     }*/
+  // go_down();
+  // go_up();
    
-    for(int i=0 ; i < Fallcon.listOfMove.size() ; i++)
-    {
-        cout<<Fallcon.listOfMove[i].energy<<" "<<Fallcon.listOfMove[i].side<<endl;
-    }
+    
    // cout<<for4[0].first<<" "<<for4[0].second<<"\n";
    // cout<<for4[1].first<<" "<<for4[1].second<<"\n";
+
    
     cout<<Fallcon.coordinate.first<<" "<<Fallcon.coordinate.second<<"\n";
     
