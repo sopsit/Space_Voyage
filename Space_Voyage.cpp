@@ -324,7 +324,28 @@ void com_back_to_right()
     {
         if (Fallcon.listOfMove[i].side == "LEFT")
         {
-            if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second] - 1 == 3)
+            if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] == 3)
+            {
+                orbit("right");
+            }
+            else
+            {
+                Fallcon.coordinate.second = Fallcon.coordinate.second + 1;
+                Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                  Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+            }
+        }
+        else
+            break;
+    }
+}
+void com_back_to_left()
+{
+    for (lli i = Fallcon.listOfMove.size() - 1; i > 0; i--)
+    {
+        if (Fallcon.listOfMove[i].side == "RIGHT")
+        {
+            if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
             {
                 orbit("right");
             }
@@ -392,7 +413,7 @@ bool go_one_up()
                 mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 3) &&
                Fallcon.coordinate.first + 1 < n && mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] != 2)
         {
-            if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second -1] == 3)
+            if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
             {
                 orbit("left");
             }
@@ -562,6 +583,39 @@ void right_up()
         go_right();
         if (!go_one_up())
             break;
+    }
+}
+void right_down()
+{
+    while (1)
+    {
+        go_left();
+        com_back_to_right();
+        go_right();
+        // if (!go_one_down())
+        //     break;
+    }
+}
+void left_up()
+{
+    while (1)
+    {
+        go_right();
+        com_back_to_left();
+        go_left();
+        if (!go_one_up())
+            break;
+    }
+}
+void left_down()
+{
+    while (1)
+    {
+        go_right();
+        com_back_to_left();
+        go_left();
+        // if (!go_one_down())
+        //     break;
     }
 }
 
