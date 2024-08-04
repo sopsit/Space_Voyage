@@ -115,7 +115,7 @@ void ride()
         {
             Fallcon.coordinate.first = temp.first;
             Fallcon.coordinate.second = temp.second;
-            Fallcon.listOfMove.push_back(logg("**RIDE", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 2, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 1));
+            Fallcon.listOfMove.push_back(logg("RIDE", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 2, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 1));
             break;
         }
     }
@@ -434,7 +434,7 @@ void com_back_to_left()
             else
             {
                 Fallcon.coordinate.second = Fallcon.coordinate.second - 1;
-                Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                Fallcon.listOfMove.push_back(logg("LEFT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
                                                   Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
             }
         }
@@ -491,18 +491,18 @@ bool go_one_up(string side)
     bool flag = false;
     if (Fallcon.coordinate.first - 1 >= 0)
     {
-        while ((Fallcon.coordinate.first - 1 >= 0 && mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 2 ||
+        while ((mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 2 ||
                 mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 3) &&
-               (Fallcon.coordinate.second - 1 >= 0 && ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) ||
+               ((Fallcon.coordinate.second - 1 >= 0 && (side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) ||
                 (Fallcon.coordinate.second + 1 < m && (side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)))
         {
             if ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
             {
-                orbit(side);
+                orbit("left");
             }
             if ((side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] == 3)
             {
-                orbit(side);
+                orbit("right");
             }
             else
             {
@@ -541,16 +541,16 @@ bool go_one_down(string side)
     {
         while ((Fallcon.coordinate.first + 1 < n && mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] == 2 ||
                 mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] == 3) &&
-               (Fallcon.coordinate.second - 1 >= 0 && ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) ||
+               ((Fallcon.coordinate.second - 1 >= 0 && (side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) ||
                 (Fallcon.coordinate.second + 1 < m && (side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)))
         {
             if ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
             {
-                orbit(side);
+                orbit("left");
             }
             if ((side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] == 3)
             {
-                orbit(side);
+                orbit("right");
             }
             else
             {
@@ -980,8 +980,6 @@ void left_up()
         if (!go_one_up("right"))
             break;
     }
-    print();
-    cout<<"******************\n";
 }
 void left_down()
 {
@@ -1126,9 +1124,9 @@ int main()
     right_down();
     left_up();
     left_down();
-    cout << "??????\n";
     if (tonel())
     {
+
         while (1)
         {
             go_right();
@@ -1137,14 +1135,35 @@ int main()
             go_left();
             if (!go_one_up("right"))
                 break;
-
-            com_back_to_one();
-
+        }
+        com_back_to_one();
+        while (1)
+        {
             go_up();
             if (!go_one_right_1())
                 break;
             go_down();
             if (!go_one_right_2())
+                break;
+        }
+        com_back_to_one();
+        while (1)
+        {
+            go_down();
+            if (!go_one_right_2())
+                break;
+            go_up();
+            if (!go_one_right_1())
+                break;
+        }
+        com_back_to_one();
+        while (1)
+        {
+            go_left();
+            if (!go_one_up("right"))
+                break;
+            go_right();
+            if (!go_one_up("left"))
                 break;
         }
     }
