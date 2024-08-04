@@ -115,7 +115,7 @@ void ride()
         {
             Fallcon.coordinate.first = temp.first;
             Fallcon.coordinate.second = temp.second;
-            Fallcon.listOfMove.push_back(logg("Ride", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 2, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 1));
+            Fallcon.listOfMove.push_back(logg("**RIDE", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 2, Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 1));
             break;
         }
     }
@@ -164,7 +164,7 @@ bool found_1()
         else
         {
             temp.energy = Fallcon.listOfMove[size - 1].energy - 1;
-            temp.time = Fallcon.listOfMove[size -1 ].time + 5;
+            temp.time = Fallcon.listOfMove[size - 1].time + 5;
         }
         Fallcon.listOfMove.push_back(temp);
     }
@@ -312,7 +312,7 @@ bool found_2()
         else
         {
             tmp.energy = Fallcon.listOfMove[size - 1].energy - 1;
-            tmp.time = Fallcon.listOfMove[size -1].time + 5;
+            tmp.time = Fallcon.listOfMove[size - 1].time + 5;
         }
         Fallcon.listOfMove.push_back(tmp);
     }
@@ -489,13 +489,14 @@ bool go_one_right_1()
 bool go_one_up(string side)
 {
     bool flag = false;
-     if (Fallcon.coordinate.first - 1 >= 0)
+    if (Fallcon.coordinate.first - 1 >= 0)
     {
-        while ((mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 2 ||
+        while ((Fallcon.coordinate.first - 1 >= 0 && mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 2 ||
                 mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 3) &&
-               (((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) || ((side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)))
+               (Fallcon.coordinate.second - 1 >= 0 && ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) ||
+                (Fallcon.coordinate.second + 1 < m && (side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)))
         {
-            if ((side == "left" || side == "LEFT")&& mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
+            if ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
             {
                 orbit(side);
             }
@@ -536,13 +537,14 @@ bool go_one_up(string side)
 bool go_one_down(string side)
 {
     bool flag = false;
-    if (Fallcon.coordinate.first + 1 >= 0)
+    if (Fallcon.coordinate.first + 1 < n)
     {
-        while ((mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] == 2 ||
+        while ((Fallcon.coordinate.first + 1 < n && mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] == 2 ||
                 mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] == 3) &&
-               (((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) || ((side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)))
+               (Fallcon.coordinate.second - 1 >= 0 && ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] != 2) ||
+                (Fallcon.coordinate.second + 1 < m && (side == "right" || side == "RIGHT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)))
         {
-            if ((side == "left" || side == "LEFT")&& mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
+            if ((side == "left" || side == "LEFT") && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
             {
                 orbit(side);
             }
@@ -640,8 +642,8 @@ bool go_one_left_1()
             else
             {
                 Fallcon.coordinate.first = Fallcon.coordinate.first + 1;
-                Fallcon.listOfMove.push_back(logg("DOWN",Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
-                                              Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+                Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                  Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
             }
         }
 
@@ -683,8 +685,8 @@ bool go_one_left_2()
             else
             {
                 Fallcon.coordinate.first = Fallcon.coordinate.first - 1;
-                Fallcon.listOfMove.push_back(logg("UP",Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
-                                              Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+                Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                  Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
             }
         }
 
@@ -773,7 +775,7 @@ void go_up()
 void go_right()
 {
 
-    while (Fallcon.coordinate.second < m && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)
+    while (Fallcon.coordinate.second < m - 1 && mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] != 2)
     {
         if (found_2())
         {
@@ -828,15 +830,17 @@ void go_left()
 }
 bool tonel()
 {
-    bool flag=false;
+    bool flag = false;
 
-    for (lli i = Fallcon.listOfMove.size() - 1 ; i > 0; i--)
+    for (lli i = Fallcon.listOfMove.size() - 1; i > 0; i--)
     {
-         if(mapp[Fallcon.coordinate.first][Fallcon.coordinate.second]==1)
+        if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second] == 1)
         {
-            ride(); flag=true ; break;
+            ride();
+            flag = true;
+            break;
         }
-       else  if (Fallcon.listOfMove[i].side == "DOWN")
+        else if (Fallcon.listOfMove[i].side == "DOWN")
         {
             if (mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 3)
             {
@@ -976,6 +980,8 @@ void left_up()
         if (!go_one_up("right"))
             break;
     }
+    print();
+    cout<<"******************\n";
 }
 void left_down()
 {
@@ -987,6 +993,79 @@ void left_down()
         go_left();
         if (!go_one_down("right"))
             break;
+    }
+}
+void com_back_to_one()
+{
+    for (lli i = Fallcon.listOfMove.size() - 1; i >= 0; i--)
+    {
+        while (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second] != 1)
+        {
+
+            if (Fallcon.listOfMove[i].side == "DOWN")
+            {
+                if (mapp[Fallcon.coordinate.first - 1][Fallcon.coordinate.second] == 3)
+                {
+                    orbit("up");
+                }
+                else
+                {
+                    Fallcon.coordinate.first = Fallcon.coordinate.first - 1;
+                    Fallcon.listOfMove.push_back(logg("UP", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                      Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+                }
+            }
+            if (Fallcon.listOfMove[i].side == "RIGHT")
+            {
+                if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second - 1] == 3)
+                {
+                    orbit("right");
+                }
+                else
+                {
+                    Fallcon.coordinate.second = Fallcon.coordinate.second - 1;
+                    Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                      Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+                }
+            }
+            if (Fallcon.listOfMove[i].side == "LEFT")
+            {
+                if (mapp[Fallcon.coordinate.first][Fallcon.coordinate.second + 1] == 3)
+                {
+                    orbit("right");
+                    if (found_2())
+                    {
+                        found_1();
+                        print();
+                        exit(0);
+                    }
+                    else if (found_1())
+                    {
+                        print();
+                        exit(0);
+                    }
+                }
+                else
+                {
+                    Fallcon.coordinate.second = Fallcon.coordinate.second + 1;
+                    Fallcon.listOfMove.push_back(logg("RIGHT", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                      Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+                }
+            }
+            if (Fallcon.listOfMove[i].side == "UP")
+            {
+                if (mapp[Fallcon.coordinate.first + 1][Fallcon.coordinate.second] == 3)
+                {
+                    orbit("down");
+                }
+                else
+                {
+                    Fallcon.coordinate.first = Fallcon.coordinate.first + 1;
+                    Fallcon.listOfMove.push_back(logg("DOWN", Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].energy - 1,
+                                                      Fallcon.listOfMove[Fallcon.listOfMove.size() - 1].time + 5));
+                }
+            }
+        }
     }
 }
 
@@ -1009,6 +1088,17 @@ int main()
             mapp[i].push_back(t);
             if (t == 4)
             {
+                if (found_2())
+                {
+                    found_1();
+                    print();
+                    exit(0);
+                }
+                else if (found_1())
+                {
+                    print();
+                    exit(0);
+                }
                 for4[countf].first = i;
                 for4[countf].second = j;
                 countf++;
@@ -1017,32 +1107,50 @@ int main()
     }
     Fallcon.listOfMove.push_back(logg("", energ, 0));
     cout << "\n";
-     if (found_2())
-        {
-            found_1();
-            print();
-            exit(0);
-        }
-        else if (found_1())
-        {
-            print();
-            exit(0);
-        }
+    if (found_2())
+    {
+        found_1();
+        print();
+        exit(0);
+    }
+    else if (found_1())
+    {
+        print();
+        exit(0);
+    }
     up_right();
     up_left();
     down_right();
-     down_left();
+    down_left();
     right_up();
     right_down();
     left_up();
     left_down();
-   if(tonel())
-   {
-     //code
-   }
-   else
-   {
-    cout<<"Not Found";
-   }
+    cout << "??????\n";
+    if (tonel())
+    {
+        while (1)
+        {
+            go_right();
+            if (!go_one_up("left"))
+                break;
+            go_left();
+            if (!go_one_up("right"))
+                break;
+
+            com_back_to_one();
+
+            go_up();
+            if (!go_one_right_1())
+                break;
+            go_down();
+            if (!go_one_right_2())
+                break;
+        }
+    }
+    else
+    {
+        cout << "Not Found";
+    }
     print();
 }
